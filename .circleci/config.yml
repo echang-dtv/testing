@@ -42,5 +42,5 @@ jobs:
           name: running SH
           command: sh ci_test.sh
       - run:
-          name: testing shell
-          command: cat main.py
+          name: generate pull request
+          command: git request-pull https://github.com/echang-dtv/testing master:for-linus
