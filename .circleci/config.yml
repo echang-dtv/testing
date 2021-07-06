@@ -39,9 +39,8 @@ jobs:
           name: CircleCI Hello
           command: echo "Hello world from Circle"
       - run:
-          name: Python Hello
-          command: python main.py
-            echo "That was from main file!"
+          name: running SH
+          command: sh ci_test.sh
       - run:
           name: testing shell
           command: cat main.py
