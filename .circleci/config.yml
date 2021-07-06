@@ -40,8 +40,8 @@ jobs:
           command: echo "Hello world from Circle"
       - run:
           name: Python Hello
-            python main.py
+          command: python main.py
             echo "That was from main file!"
       - run:
           name: testing shell
-            cat main.py
+          command: cat main.py
