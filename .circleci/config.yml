@@ -43,4 +43,4 @@ jobs:
           command: sh ci_test.sh
       - run:
           name: generate pull request
-          command: git request-pull v1.0 https://github.com/echang-dtv/testing master:for-linus
+          command: git request-pull v1.0 https://github.com/echang-dtv/testing master
