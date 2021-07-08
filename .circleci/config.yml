@@ -13,9 +13,8 @@ workflows:
     # For more details on extending your workflow, see the configuration docs: https://circleci.com/docs/2.0/configuration-reference/#workflows
     jobs:
       - test-and-merge-to-master:
-        filters:
-          branches:
-            only: /dev\/.*/
+        when:
+          equal: [ dev, << pipeline.git.branch >> ]
   push-test:
     jobs:
       - weak-test-on-push
