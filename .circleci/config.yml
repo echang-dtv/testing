@@ -8,15 +8,22 @@ orbs:
   python: circleci/python@1.2
 
 workflows:
-  sample:  # This is the name of the workflow, feel free to change it to better match your workflow.
+  main-test:  # This is the name of the workflow, feel free to change it to better match your workflow.
     # Inside the workflow, you define the jobs you want to run.
     # For more details on extending your workflow, see the configuration docs: https://circleci.com/docs/2.0/configuration-reference/#workflows
+    when:
+      condition:
+        equal: [ dev, << pipeline.git.branch >> ]
     jobs:
-      - build-and-test
+      - test-and-merge-to-master
+  push-test:
+    jobs:
+      - weak-test-on-push
+
 
 
 jobs:
-  build-and-test:  # This is the name of the job, feel free to change it to better match what you're trying to do!
+  test-and-merge-to-master:  # This is the name of the job, feel free to change it to better match what you're trying to do!
     # These next lines defines a Docker executors: https://circleci.com/docs/2.0/executor-types/
     # You can specify an image from Dockerhub or use one of the convenience images from CircleCI's Developer Hub
     # A list of available CircleCI Docker convenience images are available here: https://circleci.com/developer/images/image/cimg/python
@@ -31,23 +38,32 @@ jobs:
     # CircleCI will report the results back to your VCS provider.
     steps:
       - checkout
-      - when:
-          condition:
-            equal: [ dev, << pipeline.git.branch >> ]
-          steps:
-            - python/install-packages:
-                pkg-manager: pip
-                # app-dir: ~/project/package-directory/  # If you're requirements.txt isn't in the root directory.
-                # pip-dependency-file: test-requirements.txt  # if you have a different name for your requirements file, maybe one that combines your runtime and test requirements.
-            - run:
-                name: CircleCI Hello
-                command: echo "Hello world from Circle"
-            - run:
-                name: running SH
-                command: sh ci_test.sh
-            - run:
-                name: generate pull request
-                command: sh ci_pull.sh
-            - run:
-                name: Confirmation
-                command: echo "Changes made succefully"
+      - python/install-packages:
+          pkg-manager: pip
+          # app-dir: ~/project/package-directory/  # If you're requirements.txt isn't in the root directory.
+          # pip-dependency-file: test-requirements.txt  # if you have a different name for your requirements file, maybe one that combines your runtime and test requirements.
+      - run:
+          name: CircleCI Hello
+          command: echo "Hello world from Circle"
+      - run:
+          name: running SH
+          command: sh .circleci/strong_test.sh
+      - run:
+          name: generate pull request
+          command: sh .circleci/merge_to_master.sh
+      - run:
+          name: Confirmation
+          command: echo "Changes made succefully"
+  weak-test-on-push:
+    docker:
+      - image: cimg/python:3.8
+    steps:
+      - checkout
+      - python/install-packages:
+          pkg-manager: pip
+      - run:
+          name: Running test
+          command: sh .circleci/weak_test.sh
+      - run:
+          name: Confirmation
+          command: echo "Test completed succefully"
