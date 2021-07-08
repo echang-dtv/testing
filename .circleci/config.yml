@@ -15,7 +15,7 @@ workflows:
       - test-and-merge-to-master:
         filters:
           branches:
-            only: /dev
+            only: /dev\/.*/
   push-test:
     jobs:
       - weak-test-on-push
