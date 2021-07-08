@@ -1,4 +1,7 @@
 
 echo "Hello world from test.sh"
-python main.py
-echo "Test completed"
+if [ python main.py ]; then
+  echo "Test completed"
+else
+  raise error "Test not passed"
+fi
