@@ -14,8 +14,8 @@ workflows:
     when:
       condition:
         equal: [ dev, << pipeline.git.branch >> ]
-    jobs:
-      - test-and-merge-to-master
+      jobs:
+        - test-and-merge-to-master
   push-test:
     jobs:
       - weak-test-on-push
