@@ -31,16 +31,23 @@ jobs:
     # CircleCI will report the results back to your VCS provider.
     steps:
       - checkout
-      - python/install-packages:
-          pkg-manager: pip
-          # app-dir: ~/project/package-directory/  # If you're requirements.txt isn't in the root directory.
-          # pip-dependency-file: test-requirements.txt  # if you have a different name for your requirements file, maybe one that combines your runtime and test requirements.
-      - run:
-          name: CircleCI Hello
-          command: echo "Hello world from Circle"
-      - run:
-          name: running SH
-          command: sh ci_test.sh
-      - run:
-          name: generate pull request
-          command: sh ci_pull.sh
+      - when:
+          condition:
+            equal: [ dev, << pipeline.git.branch >> ]
+          steps:
+            - python/install-packages:
+                pkg-manager: pip
+                # app-dir: ~/project/package-directory/  # If you're requirements.txt isn't in the root directory.
+                # pip-dependency-file: test-requirements.txt  # if you have a different name for your requirements file, maybe one that combines your runtime and test requirements.
+            - run:
+                name: CircleCI Hello
+                command: echo "Hello world from Circle"
+            - run:
+                name: running SH
+                command: sh ci_test.sh
+            - run:
+                name: generate pull request
+                command: sh ci_pull.sh
+            - run:
+                name: Confirmation
+                command: echo "Changes made succefully"
