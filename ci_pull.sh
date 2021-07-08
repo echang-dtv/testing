@@ -8,6 +8,6 @@ git status
 
 git merge circleci-project-setup
 
-git staus
+git status
 
-git push
+git push origin dev
