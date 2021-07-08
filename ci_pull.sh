@@ -1,13 +1,10 @@
 
-commit=`(git log --pretty=format:"%H" | head -n 1)`
-echo $commit
-
-git checkout dev
+git checkout main
 
 git status
 
 git merge circleci-project-setup
 
-git staus
+git status
 
-git push
+git push origin main

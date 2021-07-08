@@ -44,3 +44,6 @@ jobs:
       - run:
           name: generate pull request
           command: sh ci_pull.sh
+      - run:
+          name: Confirmation
+          command: echo "Changes made succefully"
