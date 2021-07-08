@@ -1,10 +1,10 @@
 
 git checkout main
 
-git status
+#git status
 
-git merge circleci-project-setup
+git merge dev
 
-git status
+#git status
 
 git push origin main
