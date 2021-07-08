@@ -2,4 +2,12 @@
 commit=`(git log --pretty=format:"%H" | head -n 1)`
 echo $commit
 
-git request-pull main https://github.com/echang-dtv/testing $commit
+git checkout dev
+
+git status
+
+git merge circleci-project-setup
+
+git staus
+
+git push
