@@ -11,11 +11,11 @@ workflows:
   main-test:  # This is the name of the workflow, feel free to change it to better match your workflow.
     # Inside the workflow, you define the jobs you want to run.
     # For more details on extending your workflow, see the configuration docs: https://circleci.com/docs/2.0/configuration-reference/#workflows
-    when:
-      condition:
-        equal: [ dev, << pipeline.git.branch >> ]
-      jobs:
-        - test-and-merge-to-master
+    jobs:
+      - test-and-merge-to-master
+        filters:
+          branches:
+            only: dev
   push-test:
     jobs:
       - weak-test-on-push
