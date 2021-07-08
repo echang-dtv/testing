@@ -12,10 +12,10 @@ workflows:
     # Inside the workflow, you define the jobs you want to run.
     # For more details on extending your workflow, see the configuration docs: https://circleci.com/docs/2.0/configuration-reference/#workflows
     jobs:
-      - test-and-merge-to-master
+      - test-and-merge-to-master:
         filters:
           branches:
-            only: /dev
+            only: dev
   push-test:
     jobs:
       - weak-test-on-push
